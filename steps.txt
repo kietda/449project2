@@ -1,0 +1,56 @@
+﻿Install python:
+sudo apt-get install python3
+Install flask:
+pip3 install flask
+(if pip3 is not installed, we must install it:
+sudo apt install python3-pip)
+
+Go to the project folder, open terminal
+Run: python3 createdb.py		>> to create new database
+Run: python3 micro1.py
+Open another terminal:
+	Run: python3 micro2.py
+Open another terminal for operations.
+
+POST MICRSOSERVICE:
+Create new post: (without date in curl)
+curl -i -H "Content-Type:application/json" -X POST -d '{"title":"Socimedia","text":"Reddit ran wild with Boston bombing conspiracy theories in 2013","community":"Technology", "url":"https://www.theverge.com/tech/2020/2/26/21153525/firefox-dns-encryption-amazon-go-browsing-shopping-privacy","username":"tester1"}' http://localhost:5000/todo/api/v1.0/posts
+or: (have date in curl)
+curl -i -H "Content-Type:application/json" -X POST -d '{"title":"Multiple product lines in industrial sales","text":"I am relatively new to the sales world, just wondering how common this is. My current role I am a technical sales engineer for a coatings company. I work as base+10% commission.","community":"Sales", "url":"https://www.theverge.com/tech/2020/2/26/21153525/firefox-dns-encryption-amazon-go-browsing-shopping-privacy","username":"tester2","date":"2020-03-06"}' http://localhost:5000/todo/api/v1.0/posts
+Test HTTP 409 CONFLICT (username tester999 doesn't exists)
+curl -i -H "Content-Type:application/json" -X POST -d '{"title":"cause conflict 409","text":"Firefox is showing the way back to a world that’s private by default","community":"Technology", "url":"https://www.theverge.com/tech/2020/2/26/21153525/firefox-dns-encryption-amazon-go-browsing-shopping-privacy","username":"tester999","date":"2020-03-01"}' http://localhost:5000/todo/api/v1.0/posts
+Delete an existing post:
+curl -i -X DELETE http://localhost:5000/todo/api/v1.0/posts/1
+Retrieve an existing post
+curl -i http://localhost:5000/todo/api/v1.0/posts/1
+List the n most recent posts to a particular community:
+curl -i http://localhost:5000/todo/api/v1.0/posts/recent/Technology/3
+curl -i http://localhost:5000/todo/api/v1.0/posts/recent/Sales/3
+List the n most recent posts to any community:
+curl -i http://localhost:5000/todo/api/v1.0/posts/recent/6
+
+USER MICRO SERVICE:
+• Create user
+curl -i -H "Content-Type:application/json" -X POST -d '{"username":"tester3","email":"tester3@gmail.com","karma":0}' http://localhost:5000/todo/api/v1.0/users
+- Test HTTP 409 CONFLICT (duplicate value: username already exists) >> run the above cmd again
+• Update email
+curl -i -H "Content-Type:application/json" -X PUT -d '{"email":"tester3_update@gmail.com","username":"tester3"}' http://localhost:5000/todo/api/v1.0/users
+• Increment Karma
+curl -i -H "Content-Type:application/json" -X PUT -d '{"username":"tester3"}' http://localhost:5000/todo/api/v1.0/users/inckarma
+• Decrement Karma
+curl -i -H "Content-Type:application/json" -X PUT -d '{"username":"tester3"}' http://localhost:5000/todo/api/v1.0/users/deckarma
+• Deactivate account
+curl -i -H "Content-Type:application/json" -X PUT -d '{"username":"tester3"}' http://localhost:5000/todo/api/v1.0/users/deactivate
+- Try to add a new post using this account: (will cause 409 conflict)
+curl -i -H "Content-Type:application/json" -X POST -d '{"title":"Socimedia","text":"something","community":"Technology", "url":"something","username":"tester3"}' http://localhost:5000/todo/api/v1.0/posts
+
+Database:
+posts(id, title, text, community, url, username, date)
+users(username, email, karma, activated)
+Github link:
+git@github.com:kietda/449project1.git
+Temporary operations (for test)
+curl -i http://localhost:5000/todo/api/v1.0/posts	(list all post)
+curl -i http://localhost:5000/todo/api/v1.0/users	(list all users)
+Software to open a .db files:
+sudo apt-get install sqlitebrowser

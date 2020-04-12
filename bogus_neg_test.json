@@ -1,0 +1,410 @@
+{
+	"info": {
+		"_postman_id": "fe550ac1-ef12-46ea-a613-3e1e5f4f5521",
+		"name": "bogus_neg_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "micro1",
+			"item": [
+				{
+					"name": "Create post (invalid, null inputs)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35624b5a-a93f-4b3a-8dd8-b80ed7452e0d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": 1,\n    \"text\": 1,\n    \"community\": 1,\n    \"url\": 1,\n    \"username\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete post (invalid url)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0afb5905-81e5-436d-a05a-3ddc39c5812e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/{{invalid_url}}",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"{{invalid_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve post (invalid url)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "314a55f1-5039-4c82-899a-565da756f969",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/{{invalid_url}}",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"{{invalid_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List most recent posts to a particular community (invalid url)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8dbf50a-e3b1-4c63-8f19-4e469e0a3b89",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/recent/Technology/{{invalid_url}}",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"recent",
+								"Technology",
+								"{{invalid_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List most recent posts to any community (invalid url)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "57ab6abc-caab-4ae6-be85-b23cfa2cdbac",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/recent/{{invalid_url}}",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"recent",
+								"{{invalid_url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "micro2",
+			"item": [
+				{
+					"name": "Create a user (invalid, null inputs)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": 1,\n    \"email\": null,\n    \"karma\": \"hello world!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update email (integer, null inputs)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": 1,\n    \"username\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Increment Karma (invalid input)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users/inckarma",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users",
+								"inckarma"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decrement Karma (null input)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users/deckarma",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users",
+								"deckarma"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate account (null input)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users/deactivate",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "70c3b558-a6d5-4c12-8f69-c1a0c6572745",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3692582d-2c7b-4876-bad7-a98c5c5769e0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

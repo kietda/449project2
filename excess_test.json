@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "b129916d-ca7a-4098-b971-df7ca69a6b66",
+		"name": "excess_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "micro1",
+			"item": [
+				{
+					"name": "Create new post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35624b5a-a93f-4b3a-8dd8-b80ed7452e0d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Excess Load Test\",\n    \"text\": \"\",\n    \"community\": \"\",\n    \"url\": \"\",\n    \"username\": \"tester1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve existing post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "314a55f1-5039-4c82-899a-565da756f969",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/3",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List most recent posts to a particular community",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8dbf50a-e3b1-4c63-8f19-4e469e0a3b89",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/recent/Technology/3",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"recent",
+								"Technology",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List most recent posts to any community",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "57ab6abc-caab-4ae6-be85-b23cfa2cdbac",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.globals.set(\"delete_post_id_num\", jsonData[0].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/recent/6",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"recent",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete recent post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0afb5905-81e5-436d-a05a-3ddc39c5812e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "03948a3c-3688-4733-99dd-a58d8830311d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5000/todo/api/v1.0/posts/{{delete_recent_post_id_num}}",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5000",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"posts",
+								"{{delete_recent_post_id_num}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "micro2",
+			"item": [
+				{
+					"name": "Create a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"tester007\",\n    \"email\": \"tester007@gmail.com\",\n    \"karma\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate account",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"tester007\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users/deactivate",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update email",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"tester1_update@gmail.com\",\n    \"username\": \"tester1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Increment Karma",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"tester1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users/inckarma",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users",
+								"inckarma"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decrement Karma",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"tester1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{localhost}}:5100/todo/api/v1.0/users/deckarma",
+							"protocol": "http",
+							"host": [
+								"{{localhost}}"
+							],
+							"port": "5100",
+							"path": [
+								"todo",
+								"api",
+								"v1.0",
+								"users",
+								"deckarma"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

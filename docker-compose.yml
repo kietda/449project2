@@ -1,0 +1,35 @@
+version: "2"
+services:
+  excess_test:
+    image: postman/newman
+    # can change the number of iteration for request and delay between requests:
+    # --iteration-count <number of iterations>
+    # --delay-request <time in milliseconds>
+    command: run excess_test.json --iteration-count 2 --delay-request 250 --globals postman_globals.json --silent
+    network_mode: host
+    # Mount directory for excess_test.json
+    # <local directory> : <docker container directory> for example...
+    # volumes:
+    #   - /home/ubuntu/cpsc449:/docker_container_etc/newman
+    volumes:
+      - <change to directory of excess_test.json>:/etc/newman
+
+  basic_test:
+    image: postman/newman
+    command: run basic_test.json --globals postman_globals.json
+    network_mode: host
+    depends_on:
+      - excess_test
+    # Mount directory for basic_test.json
+    volumes:
+      - <change to directory of basic_test.json>:/etc/newman
+
+  bogus_neg_test:
+    image: postman/newman
+    command: run bogus_neg_test.json --globals postman_globals.json
+    network_mode: host
+    depends_on:
+      - excess_test
+    # Mount directory for neg_test.json
+    volumes:
+      - <change to directory of bogus_neg_test.json>:/etc/newman
