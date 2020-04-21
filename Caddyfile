@@ -1,7 +1,15 @@
-http://localhost:2016/posts {
+http://localhost:2015/posts {
     proxy / http://127.0.0.1:5000 http://127.0.0.1:5001 http://127.0.0.1:5002
 }
 
-http://localhost:2016/users {
+http://localhost:2015/users {
     proxy / http://127.0.0.1:5100 http://127.0.0.1:5101 http://127.0.0.1:5102
+}
+
+http://localhost:2015/messages {
+    proxy / http://127.0.0.1:5200 http://127.0.0.1:5201 http://127.0.0.1:5202
+}
+
+http://localhost:2015/votes {
+    proxy / http://127.0.0.1:5300 http://127.0.0.1:5301 http://127.0.0.1:5302
 }

@@ -8,7 +8,7 @@ import sqlite3
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-conn = sqlite3.connect('project1.db')
+conn = sqlite3.connect('project.db')
 cur = conn.cursor()
 cur.execute("PRAGMA foreign_keys = 1")
 conn.commit()
@@ -25,12 +25,12 @@ def dict_factory(cursor, row):
 
 @app.route('/')
 def index():
-    return "Hello everyone accessing our project 1!"
+    return "Hello everyone for accessing our posts api!"
 
-#temporary operation, delete later
-@app.route('/todo/api/v1.0/posts', methods = ['GET'])
-def get_posts():
-    conn = sqlite3.connect('project1.db')
+#get all posts  //delete later
+@app.route('/todo/api/v1.0/get', methods = ['GET'])
+def get_allposts():
+    conn = sqlite3.connect('project.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     all_posts = cur.execute('SELECT * FROM posts;').fetchall()
@@ -38,19 +38,25 @@ def get_posts():
     conn.close()
     return jsonify(all_posts)    
 
-#create a new post
-@app.route('/todo/api/v1.0/posts',methods=['POST'])
+#since a web service client applications will expect that we always
+#respond with JSON, so we need to improve our 404 error handler
+# @app.errorhandler(404)
+# def not_found(error):
+#     return make_response(jsonify({'error:':'Not found'}), 404)
+
+#create a new post => concurrently create a row with this post_id in a votes table
+@app.route('/todo/api/v1.0/create',methods=['POST'])
 def create_post():
     if not request.json or not 'title' in request.json \
         or not 'text' in request.json \
         or not 'community' in request.json \
         or not 'username' in request.json:        
         abort(400)
-    
+        
     pusername = request.json['username']
     to_filter = []
     to_filter.append(pusername)
-    conn = sqlite3.connect('project1.db')
+    conn = sqlite3.connect('project.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     #check if username exists in users table
@@ -75,14 +81,21 @@ def create_post():
     to_filter2.append(pusername)
     to_filter2.append(pdate)    
     results = cur.execute(query, to_filter2)
+    # conn.commit()
+    results = cur.execute("SELECT * FROM posts ORDER BY id DESC limit 1;").fetchall()
+    ppostid = results[0]['id']
+    query = "INSERT INTO votes (postid) VALUES (?);"
+    to_filter3 = []
+    to_filter3.append(ppostid)
+    results = cur.execute(query, to_filter3)
     conn.commit()
     conn.close()
     return jsonify({'post':True}),201
 
 #delete an existing post
-@app.route('/todo/api/v1.0/posts/<int:post_id>', methods=['DELETE'])
+@app.route('/todo/api/v1.0/delete/<int:post_id>', methods=['DELETE'])
 def delete_post(post_id):
-    conn = sqlite3.connect('project1.db')
+    conn = sqlite3.connect('project.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()    
     to_filter = []
@@ -91,7 +104,9 @@ def delete_post(post_id):
     results = cur.execute(query, to_filter).fetchall()
     if len(results)==0:        
         conn.close()
-        abort(404)     
+        abort(404)
+    query = "DELETE FROM votes WHERE postid=?;" # rows in votes table depends on row in posts table
+    cur.execute(query,to_filter).fetchall()
     query = "DELETE FROM posts WHERE id=?;"
     cur.execute(query,to_filter).fetchall()
     conn.commit()
@@ -99,9 +114,9 @@ def delete_post(post_id):
     return jsonify({'result':True}),200
 
 #Retrieve an existing post
-@app.route('/todo/api/v1.0/posts/<int:post_id>', methods=['GET'])
+@app.route('/todo/api/v1.0/get/<int:post_id>', methods=['GET'])
 def get_post(post_id):
-    conn = sqlite3.connect('project1.db')
+    conn = sqlite3.connect('project.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     query = "SELECT * FROM posts WHERE id=?;"
@@ -114,17 +129,24 @@ def get_post(post_id):
         abort(404)       
     return jsonify(results),200
 
+# get the latest postid => for testing
+@app.route('/todo/api/v1.0/getlatest',methods=['GET'])
+def get_latest_postid():
+    conn = sqlite3.connect('project.db')
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+    query = "SELECT id FROM posts ORDER BY id DESC LIMIT 1;"
+    results = cur.execute(query).fetchall()
+    conn.commit()
+    conn.close()
+    if len(results)==0:
+        return ("-1")
+    return str(results[0]['id'])
+
 #List the n most recent posts to a particular community
-@app.route('/todo/api/v1.0/posts/recent/<community_name>/<posts_amount>', methods=['GET'])
+@app.route('/todo/api/v1.0/get/recent/<community_name>/<posts_amount>', methods=['GET'])
 def get_community_recent_post(community_name, posts_amount):
-    # community_name = request.args.get('community_name');
-    # posts_amount = request.args.get('posts_amount');
-    # com_name = community_name
-    # pos_amount = posts_amount
-    
-    # pcommunity =request.json['community']
-    # purl = request.json.get('url',"")
-    conn = sqlite3.connect('project1.db')
+    conn = sqlite3.connect('project.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     query = "SELECT id, title, community, username, date FROM posts WHERE community=? ORDER BY id DESC limit ?;"
@@ -139,9 +161,9 @@ def get_community_recent_post(community_name, posts_amount):
     return jsonify(results),200
 
 #List the n most recent posts to any community
-@app.route('/todo/api/v1.0/posts/recent/<posts_amount>', methods=['GET'])
+@app.route('/todo/api/v1.0/get/recent/<posts_amount>', methods=['GET'])
 def get_any_recent_post(posts_amount):
-    conn = sqlite3.connect('project1.db')
+    conn = sqlite3.connect('project.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     query = "SELECT id, title, community, username, date FROM posts ORDER BY id DESC limit ?;"
