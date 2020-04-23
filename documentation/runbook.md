@@ -2,9 +2,9 @@
 
 |        | Team             | Contact Info          	  	  | Runbook Review        	  |
 |--------|------------------|-------------------------------------|-------------------------------|
-|   1	 | Development      | kdang53@csu.fullerton.edu 	  | Kiet Dang - 3/15/2020 	  |
-|   2	 | Testing          | christian.angeles@csu.fullerton.edu | Christian Angeles - 3/28/2020 |
-|   3	 | Operations       | art2015@csu.fullerton.edu 	  | Arthur Salazar - 3/29/2020    |
+|   1	 | Development      | christian.angeles@csu.fullerton.edu | Christian Angeles - 4/23/2020 |
+|   2	 | Testing          | art2015@csu.fullerton.edu 	  | Arthur Salazar - 3/29/2020    |
+|   3	 | Operations       | kdang53@csu.fullerton.edu 	  | Kiet Dang - 3/15/2020 	  |
 
 
 # Overview
@@ -22,7 +22,7 @@ $ sudo apt install python3-pip
 $ pip3 install flask
 4. Install Gunicorn3
 $ sudo apt install --yes gunicorn3
-5. Install foreman 
+5. Install foreman
 $ sudo apt install ruby-foreman
 6. Installing Caddy1
 $ curl https://getcaddy.com | bash -s personal
@@ -98,7 +98,7 @@ $ python3 negativetest.py
 $ locust -f loadtest.py --host=http://localhost:2015
 When python load testing app Locust is started, open browser and visit this url:
 - http://127.0.0.1:8089/
-This is a web-interface of our Locust instance. 
+This is a web-interface of our Locust instance.
 - Input number of total users: 100
 - Input Hatch rate (users spawned/second): 5
 - Press "Start swarming" to start "hatching" users and see results in the table
@@ -109,4 +109,4 @@ Similar to Loadtest but this time, in a web-interface of our Locust instance(htt
 - Input number of total users: 2000
 - Input Hatch rate (users spawned/second): 50
 - Press "Start swarming" to start "hatching" users and see results in the table
-This time, we will see the failure rate is too high because of overload. 
+This time, we will see the failure rate is too high because of overload.
