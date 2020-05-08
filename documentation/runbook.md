@@ -2,14 +2,13 @@
 
 |        | Team             | Contact Info          	  	  | Runbook Review        	  |
 |--------|------------------|-------------------------------------|-------------------------------|
-|   1	 | Development      | christian.angeles@csu.fullerton.edu | Christian Angeles - 4/23/2020 |
-|   2	 | Testing          | art2015@csu.fullerton.edu 	  | Arthur Salazar - 3/29/2020    |
-|   3	 | Operations       | kdang53@csu.fullerton.edu 	  | Kiet Dang - 3/15/2020 	  |
+|   1	 | Development      | christian.angeles@csu.fullerton.edu | Christian Angeles - 4/27/2020 |
+|   2	 | Testing	    | art2015@csu.fullerton.edu 	  | Arthur Salazar - 4/27/2020    |
+|   3	 | Operations	    | kdang53@csu.fullerton.edu 	  | Kiet Dang - 4/27/2020 	  |
 
 
 # Overview
-This is the project we’re going to build services for a web application
-similar to reddit.
+This is the project we’re going to build services for a web application similar to reddit.
 The test environment for this project in this course is a Tuffix VM 2019r2 with Python 3.7.3
 
 # Install neccessary packages:
@@ -22,11 +21,11 @@ $ sudo apt install python3-pip
 $ pip3 install flask
 4. Install Gunicorn3
 $ sudo apt install --yes gunicorn3
-5. Install foreman
+5. Install foreman 
 $ sudo apt install ruby-foreman
 6. Installing Caddy1
 $ curl https://getcaddy.com | bash -s personal
-7. Install Python script using the Requests library
+7. Install Python script for the Requests library
 $ pip3 install --user requests
 8. Install faker (for getting bogus data):
 $ pip3 install faker
@@ -56,7 +55,7 @@ $ curl -i http://localhost:2015/posts/todo/api/v1.0/get/recent/6
 
 USER MICRO SERVICE:
 1. Create user
-$ curl -i -H "Content-Type:application/json" -X POST -d '{"username":"tester5","email":"tester5@gmail.com","karma":0}' http://localhost:2015/users/todo/api/v1.0/create
+$ curl -i -H "Content-Type:application/json" -X POST -d '{"username":"tester101","email":"tester101@gmail.com","karma":0}' http://localhost:2015/users/todo/api/v1.0/create
 2. Update email
 $ curl -i -H "Content-Type:application/json" -X PUT -d '{"email":"tester5_update@gmail.com","username":"tester5"}' http://localhost:2015/users/todo/api/v1.0/updatemail
 3. Increment Karma
@@ -71,10 +70,10 @@ MESSAGE MICRO SERVICE:
 $ curl -i -H "Content-Type:application/json" -X POST -d '{"user_from":"tester2","user_to":"tester4","content":"user tester2 send a message to user tester 4"}' http://localhost:2015/messages/todo/api/v1.0/send
 2. Delete message
 $ curl -i -X DELETE http://localhost:2015/messages/todo/api/v1.0/delete/1
-3. Set favorite message
-$ curl -i -H "Content-Type:application/json" -X PUT -d '{"message_id":"2"}' http://localhost:2015/messages/todo/api/v1.0/setfavorite
+3. Set favorite message using message_id
+$ curl -i -H "Content-Type:application/json" -X PUT -d '{"message_id":"101"}' http://localhost:2015/messages/todo/api/v1.0/setfavorite
 4. Get favorite message (of a user)
-$ curl -i http://localhost:2015/messages/todo/api/v1.0/get/favorite/tester3
+$ curl -i http://localhost:2015/messages/todo/api/v1.0/get/favorite/tester4
 
 VOTE MICRO SERVICE:
 1. Upvote a post
@@ -98,10 +97,14 @@ $ python3 negativetest.py
 $ locust -f loadtest.py --host=http://localhost:2015
 When python load testing app Locust is started, open browser and visit this url:
 - http://127.0.0.1:8089/
-This is a web-interface of our Locust instance.
+This is a web-interface of our Locust instance. 
 - Input number of total users: 100
 - Input Hatch rate (users spawned/second): 5
 - Press "Start swarming" to start "hatching" users and see results in the table
+
+To stop testing:
+- Click "Stop" button at the top right corner of browser.
+- Come back terminal, press "Ctrl + C" to stop.
 
 # STRESS TEST (simulating 2000 users with bogus data)
 $ locust -f loadtest.py --host=http://localhost:2015
@@ -109,4 +112,8 @@ Similar to Loadtest but this time, in a web-interface of our Locust instance(htt
 - Input number of total users: 2000
 - Input Hatch rate (users spawned/second): 50
 - Press "Start swarming" to start "hatching" users and see results in the table
-This time, we will see the failure rate is too high because of overload.
+This time, we will see the failure rate is too high because of overload. 
+
+To stop testing:
+- Click "Stop" button at the top right corner of browser.
+- Come back terminal, press "Ctrl + C" to stop.
