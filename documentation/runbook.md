@@ -1,6 +1,6 @@
 # Overview
 This is the project we’re going to build services for a web application similar to reddit.
-The test environment for this project in this course is a Tuffix VM 2019r2 with Python 3.7.3
+The test environment for this project in this course is a Linux VM such as Ubuntu 20.04.1 LTS
 
 # Install neccessary packages:
 Following these steps to install neccessary packages:
