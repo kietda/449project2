@@ -1,12 +1,3 @@
-# Support Contacts
-
-|        | Team             | Contact Info          	  	  | Runbook Review        	  |
-|--------|------------------|-------------------------------------|-------------------------------|
-|   1	 | Development      | christian.angeles@csu.fullerton.edu | Christian Angeles - 4/27/2020 |
-|   2	 | Testing	    | art2015@csu.fullerton.edu 	  | Arthur Salazar - 4/27/2020    |
-|   3	 | Operations	    | kdang53@csu.fullerton.edu 	  | Kiet Dang - 4/27/2020 	  |
-
-
 # Overview
 This is the project we’re going to build services for a web application similar to reddit.
 The test environment for this project in this course is a Tuffix VM 2019r2 with Python 3.7.3
