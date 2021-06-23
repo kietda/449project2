@@ -3,7 +3,7 @@
 This is the project we’re going to build services for a web application
 similar to reddit.
 
-For this project you will build four microservices for specific functionality of this site and automation test suites for these services.
+It includes four microservices for specific functionality of a site and automation test suites for these services.
 
 # SERVICES
 # POSTING MICROSERVICE
